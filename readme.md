@@ -50,10 +50,8 @@ pnpm install
 
 ### 2. Create the Supabase tables
 
-In your Supabase project, open the SQL editor and run
-[supabase/migrations/0001_map_sessions.sql](supabase/migrations/0001_map_sessions.sql).
-
-It creates two tables, both prefixed with `map_`:
+The tables are part of the shared schema in [cvrnz_db](https://github.com/cvrnz/cvrnz_db); make schema changes there.
+There are two, both prefixed with `map_`:
 
 | Table | What's in it |
 | --- | --- |
