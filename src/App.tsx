@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Map as LeafletMap } from "leaflet";
 import { Spinner } from "@heroui/react";
-import { LoginScreen } from "./components/LoginScreen";
 import { MapView, MAX_ZOOM, MIN_ZOOM } from "./components/MapView";
 import { MapControls } from "./components/MapControls";
 import { ControlDock } from "./components/ControlDock";
@@ -20,9 +19,9 @@ import { useIdleChrome } from "./hooks/useIdleChrome";
 import { useTrips } from "./hooks/useTrips";
 import { trailDistance } from "./lib/geo";
 import { DEFAULT_BASEMAP } from "./lib/basemaps";
-import { supabase } from "./lib/supabase";
 import { PANEL } from "./lib/ui";
 import type { DriveSession, TrailPoint } from "./lib/types";
+import { signInUrl, signOut as ssoSignOut } from "./lib/sso";
 
 const DEFAULT_ZOOM = 16;
 
@@ -85,7 +84,8 @@ function MapScreen({ email }: { email: string | null }) {
 
   const signOut = useCallback(async () => {
     setSettingsOpen(false);
-    await supabase.auth.signOut();
+    // Signs out of every cvrnz app and goes to hub's sign-in page.
+    await ssoSignOut();
   }, []);
 
   const openTrip = useCallback(
@@ -241,5 +241,10 @@ export default function App() {
     );
   }
 
-  return session ? <MapScreen email={session.user.email ?? null} /> : <LoginScreen />;
+  if (!session) {
+    // Signed out elsewhere: sign in again on hub.
+    location.replace(signInUrl());
+    return null;
+  }
+  return <MapScreen email={session.user.email ?? null} />;
 }
