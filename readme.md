@@ -34,9 +34,9 @@ mounted in a car.
 React 19 · TypeScript · Vite · pnpm · HeroUI v3 (Tailwind v4) · Leaflet ·
 Supabase · vite-plugin-pwa
 
-The HeroUI theme tokens and Geist fonts in
-[src/index.css](src/index.css) are shared with vera, so the two apps look
-like siblings. Map vectors (the trail and position dot) are deliberately fixed
+The HeroUI theme is shadcn-blue from
+[heroui-themes](https://github.com/cvrnz/heroui-themes), copied into
+[src/shadcn-blue.css](src/shadcn-blue.css), like the other hub apps. Map vectors (the trail and position dot) are deliberately fixed
 hex rather than theme tokens — they're drawn on OSM tiles, not on the app
 surface, so they have to stay legible in either theme.
 
